@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <!-- <v-toolbar height="380" dark prominent src="./assets/red-and-yellow-covid-19-poster-vector1.jpg"></v-toolbar> -->
     <v-app-bar
       app
       color="white"
@@ -81,11 +80,11 @@
     <v-main>
       <!-- <HelloWorld /> -->
     </v-main>
-    <!-- <v-footer color="black" app>
+    <v-footer color="black" app>
       <span class="white--text">
         <strong>&copy; 2020 Covid-19</strong> Powered by Torus Actions SAS
       </span>
-    </v-footer> -->
+    </v-footer>
   </v-app>
 </template>
 
