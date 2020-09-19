@@ -43,7 +43,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn text v-bind="attrs" v-on="on">
             <span class="mr-2">Models</span>
-            <v-icon>mdi-arrow-down</v-icon>
+            <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </template>
 
@@ -56,8 +56,8 @@
       <v-menu offset-y bottom origin="center center" transition="scale-transition">
         <template v-slot:activator="{ on, attrs }">
           <v-btn text v-bind="attrs" v-on="on">
-            <span class="mr-2">Models</span>
-            <v-icon>mdi-arrow-down</v-icon>
+            <span class="mr-2">Resources</span>
+            <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
         </template>
 
@@ -79,20 +79,25 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <!-- <HelloWorld /> -->
     </v-main>
+    <!-- <v-footer color="black" app>
+      <span class="white--text">
+        <strong>&copy; 2020 Covid-19</strong> Powered by Torus Actions SAS
+      </span>
+    </v-footer> -->
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+// import HelloWorld from "./components/HelloWorld";
 
 export default {
   name: "App",
 
-  components: {
-    HelloWorld
-  },
+  // components: {
+  //   HelloWorld
+  // },
 
   data: () => ({
     itemsModels: [
