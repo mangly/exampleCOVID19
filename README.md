@@ -1,4 +1,10 @@
-# school
+# Covid-19
+
+### Project requirements
+```
+node v10.15.3 or higher
+npm 6.13.2 or higher
+```
 
 ## Project setup
 ```
