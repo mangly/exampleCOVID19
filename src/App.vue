@@ -10,7 +10,7 @@
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
-          class="shrink mr-2"
+          class="shrink mr-2 hidden-sm-and-down"
           contain
           src="./assets/logo-covid.png"
           transition="scale-transition"
@@ -27,58 +27,81 @@
         />-->
       </div>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
-      <v-btn href target="_blank" text>
-        <span class="mr-2">Home</span>
-      </v-btn>
-      <v-btn href target="_blank" text>
-        <span class="mr-2">Data</span>
-      </v-btn>
-      <v-btn href target="_blank" text>
-        <span class="mr-2">Methodology</span>
-      </v-btn>
-      <v-menu offset-y bottom origin="center center" transition="scale-transition">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn text v-bind="attrs" v-on="on">
-            <span class="mr-2">Models</span>
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </template>
+      <div class="hidden-sm-and-down">
+        <v-btn href="/" text>
+          <span class="mr-2">Home</span>
+        </v-btn>
+        <v-btn href target="_blank" text>
+          <span class="mr-2">Data</span>
+        </v-btn>
+        <v-btn href target="_blank" text>
+          <span class="mr-2">Methodology</span>
+        </v-btn>
+        <v-menu offset-y bottom origin="center center" transition="scale-transition">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text v-bind="attrs" v-on="on">
+              <span class="mr-2">Models</span>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
 
-        <v-list>
-          <v-list-item v-for="(item, i) in itemsModels" :key="i" @click>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <v-menu offset-y bottom origin="center center" transition="scale-transition">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn text v-bind="attrs" v-on="on">
-            <span class="mr-2">Resources</span>
-            <v-icon>mdi-chevron-down</v-icon>
-          </v-btn>
-        </template>
+          <v-list>
+            <v-list-item v-for="(item, i) in itemsModels" :key="i" @click>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-menu offset-y bottom origin="center center" transition="scale-transition">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn text v-bind="attrs" v-on="on">
+              <span class="mr-2">Resources</span>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
 
-        <v-list>
-          <v-list-item v-for="(item, i) in itemsResources" :key="i" @click>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <v-btn href target="_blank" text>
-        <span class="mr-2">Containment</span>
-      </v-btn>
-      <v-btn href target="_blank" text>
-        <span class="mr-2">News</span>
-      </v-btn>
-      <v-btn href target="_blank" text>
-        <span class="mr-2">About us</span>
-      </v-btn>
+          <v-list>
+            <v-list-item v-for="(item, i) in itemsResources" :key="i" @click>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-btn href target="_blank" text>
+          <span class="mr-2">Containment</span>
+        </v-btn>
+        <v-btn href target="_blank" text>
+          <span class="mr-2">News</span>
+        </v-btn>
+        <v-btn href target="_blank" text>
+          <span class="mr-2">About us</span>
+        </v-btn>
+      </div>
+      <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer" />
     </v-app-bar>
+    <v-navigation-drawer v-if="isMobile" v-model="drawer" absolute temporary>
+      <v-list-item>
+        <v-img src="./assets/logo-covid.png"></v-img>
+      </v-list-item>
 
+      <v-divider />
+
+      <v-list dense>
+        <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-main>
-      <!-- <HelloWorld /> -->
+      <v-fade-transition mode="out-in">
+        <router-view />
+      </v-fade-transition>
     </v-main>
     <v-footer color="black" app>
       <span class="white--text">
@@ -93,12 +116,15 @@
 
 export default {
   name: "App",
+  drawer: null,
 
   // components: {
   //   HelloWorld
   // },
 
   data: () => ({
+    drawer: false,
+    isMobile: false,
     itemsModels: [
       { title: "Click Me" },
       { title: "Click Me" },
@@ -110,7 +136,32 @@ export default {
       { title: "Models" },
       { title: "Simulations" },
       { title: "State of the art in epidemis modelling" }
+    ],
+    items: [
+      { title: "Home", icon: "mdi-dashboard" },
+      { title: "About", icon: "mdi-question_answer" }
     ]
-  })
+  }),
+
+  beforeDestroy() {
+    if (typeof window !== "undefined") {
+      window.removeEventListener("resize", this.onResize, { passive: true });
+    }
+  },
+
+  mounted() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
+
+  methods: {
+    onResize() {
+      if (window.innerWidth < 600) this.isMobile = true;
+      else {
+        this.isMobile = false;
+        this.drawer = false;
+      }
+    }
+  }
 };
 </script>
