@@ -3,16 +3,15 @@
     <v-app-bar
       app
       color="white"
-      dark
-      height="150"
-      src="./assets/videoblocks-coronavirus-covid-19-background_rk80xzipu__d_thumbnail-1080_01.png"
+      height="100"
+      src="./assets/viggo-jorgen-p5N3PVOOF_0-unsplash (1).jpg"
     >
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
-          class="shrink mr-2 hidden-sm-and-down"
+          class="shrink mr-2"
           contain
-          src="./assets/logo-covid.png"
+          src="./assets/30271657.png"
           transition="scale-transition"
           width="200"
         />
@@ -79,13 +78,7 @@
       </div>
       <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer" />
     </v-app-bar>
-    <v-navigation-drawer v-if="isMobile" v-model="drawer" absolute temporary>
-      <v-list-item>
-        <v-img src="./assets/logo-covid.png"></v-img>
-      </v-list-item>
-
-      <v-divider />
-
+    <v-navigation-drawer color="grey" dark v-if="isMobile" v-model="drawer" absolute temporary>
       <v-list dense>
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-icon>
