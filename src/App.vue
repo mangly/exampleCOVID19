@@ -3,7 +3,7 @@
     <v-app-bar
       app
       color="white"
-      height="100"
+      height="80"
       src="./assets/viggo-jorgen-p5N3PVOOF_0-unsplash (1).jpg"
     >
       <div class="d-flex align-center">
