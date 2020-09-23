@@ -55,7 +55,6 @@
       </div>
 
       <!-- <v-spacer /> -->
-
     </v-app-bar>
     <v-main style="background-color:grey">
       <v-fade-transition mode="out-in">
@@ -81,6 +80,7 @@ export default {
 
   data() {
     return {
+      isMobile: false,
       drawer: true,
       items: [
         { title: "Home", icon: "mdi-home-city" },
@@ -95,15 +95,30 @@ export default {
 
   methods: {
     changeMini() {
-      this.mini = !this.mini;
-      this.expandOnhover = !this.expandOnhover;
-      this.iconChevron = this.mini ? "mdi-chevron-right" : "mdi-chevron-left";
+      if (!this.isMobile) {
+        this.mini = !this.mini;
+        this.expandOnhover = !this.expandOnhover;
+        this.iconChevron = this.mini ? "mdi-chevron-right" : "mdi-chevron-left";
+      } else this.drawer = !this.drawer;
     },
 
     expandOnHoverMethod() {
       this.iconChevron = this.mini ? "mdi-chevron-right" : "mdi-chevron-left";
       return this.expandOnhover;
+    },
+    onResize() {
+      this.isMobile = window.innerWidth < 600 ? true : false;
     }
+  },
+  beforeDestroy() {
+    if (typeof window !== "undefined") {
+      window.removeEventListener("resize", this.onResize, { passive: true });
+    }
+  },
+
+  mounted() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
   }
 };
 </script>
