@@ -22,7 +22,7 @@
         <v-divider />
 
         <v-list dark dense>
-          <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item v-for="item in itemsMenu" :key="item.title" link>
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -55,6 +55,19 @@
       <v-btn class="mx-2" fab small color="white">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
+      <v-menu offset-y bottom origin="center center" transition="scale-transition">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="ml-10" icon color="info" v-bind="attrs" v-on="on">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list class="pr-15">
+          <v-list-item v-for="(item, i) in itemsAppBar" :key="i" @click>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-main style="background-color:#eeeeee">
       <v-fade-transition mode="out-in">
@@ -82,10 +95,15 @@ export default {
     return {
       isMobile: false,
       drawer: true,
-      items: [
+      itemsMenu: [
         { title: "Home", icon: "mdi-home-city" },
         { title: "My Account", icon: "mdi-account" },
         { title: "Users", icon: "mdi-account-group-outline" }
+      ],
+      itemsAppBar: [
+        { title: "Profile" },
+        { title: "Setting" },
+        { title: "Logout" }
       ],
       mini: false,
       expandOnhover: false,
