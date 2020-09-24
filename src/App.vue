@@ -34,14 +34,9 @@
         </v-list>
       </v-img>
     </v-navigation-drawer>
-    <v-app-bar
-      elevation="0"
-      app
-      height="56"
-      src="./assets/viggo-jorgen-p5N3PVOOF_0-unsplash (1).jpg"
-    >
+    <v-app-bar elevation="0" app height="100" color="#eeeeee">
       <div class="d-flex align-center">
-        <v-btn icon @click.stop="changeMini">
+        <v-btn class="mx-2" fab dark small color="#b70000" @click.stop="changeMini">
           <v-icon>{{iconChevron}}</v-icon>
         </v-btn>
         <v-img
@@ -53,10 +48,15 @@
           width="100"
         />
       </div>
-
-      <!-- <v-spacer /> -->
+      <v-spacer />
+      <div class="pt-5" style="width:100px">
+        <v-text-field label="Search" color="#b70000" />
+      </div>
+      <v-btn class="mx-2" fab small color="white">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
     </v-app-bar>
-    <v-main style="background-color:grey">
+    <v-main style="background-color:#eeeeee">
       <v-fade-transition mode="out-in">
         <router-view />
       </v-fade-transition>
