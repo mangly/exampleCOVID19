@@ -17,7 +17,7 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: () => import(/* webpackChunkName: "about" */ './views/home/index.vue')
+      component: () => import(/* webpackChunkName: "about" */ './components/HelloWorld.vue')
     },
 
     // {

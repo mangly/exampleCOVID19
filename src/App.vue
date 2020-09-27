@@ -36,7 +36,7 @@
     </v-navigation-drawer>
     <v-app-bar elevation="0" app height="100" color="#eeeeee">
       <div class="d-flex align-center">
-        <v-btn class="mx-2" fab dark small color="#b70000" @click.stop="changeMini">
+        <v-btn class="mx-2 ml-5" fab dark small color="#b70000" @click.stop="changeMini">
           <v-icon>{{iconChevron}}</v-icon>
         </v-btn>
         <v-img
@@ -49,15 +49,10 @@
         />
       </div>
       <v-spacer />
-      <div class="pt-5" style="width:100px">
-        <v-text-field label="Search" color="#b70000" />
-      </div>
-      <v-btn class="mx-2" fab small color="white">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+
       <v-menu offset-y bottom origin="center center" transition="scale-transition">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="ml-10" icon color="info" v-bind="attrs" v-on="on">
+          <v-btn class="ml-10 mr-5" icon color="info" v-bind="attrs" v-on="on">
             <v-icon>mdi-account</v-icon>
           </v-btn>
         </template>
@@ -69,9 +64,10 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-main style="background-color:#eeeeee">
+    <v-main style="background-color:#eeeeee; padding-top:120px">
       <v-fade-transition mode="out-in">
-        <router-view />
+        <router-view class="mr-10 ml-10" />
+        <!-- <v-card><HelloWorld/></v-card> -->
       </v-fade-transition>
     </v-main>
     <v-footer color="black" app>
@@ -83,13 +79,13 @@
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld";
+import HelloWorld from "./components/HelloWorld";
 
 export default {
   name: "App",
-  // components: {
-  //   HelloWorld
-  // },
+  components: {
+    HelloWorld
+  },
 
   data() {
     return {
