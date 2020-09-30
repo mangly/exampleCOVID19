@@ -1,12 +1,12 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <v-card elevation="2" class="pb-4 pt-4">
+  <v-card elevation="2" class="pl-4 pr-4 pb-4 pt-4">
+    <v-row>
+      <v-col lg="8" cols="12">
         <vuevectormap
           @regionSelected="regionSelectedEventFire"
           ref="map"
           width="100%"
-          height="700px"
+          height="500px"
           backgroundColor="#fff"
           :selectedMarkers="selectedMarkers"
           :markerStyle="markerStyle"
@@ -16,13 +16,26 @@
           :regionsSelectableOne="true"
           :regionStyle="regionStyle"
         ></vuevectormap>
-      </v-card>
-    </v-col>
-  </v-row>
+      </v-col>
+      <v-col lg="4" cols="12">
+        <info-covid-country :infoCovidCountry="infoCovidCountry" />
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script>
+import InfoCovidCountry from "./InfoCovidCountry";
 export default {
+  props: {
+    infoCovidCountry: {
+      type: Object,
+      default: null
+    }
+  },
+  components: {
+    "info-covid-country": InfoCovidCountry
+  },
   mounted() {
     this.map = this.$refs.map.getMap();
     window.addEventListener("resize", () => {
@@ -38,7 +51,7 @@ export default {
 
     // Regions
     regionStyle: { initial: { fill: "#ccc" } },
-    selectedRegions: ["FR"],
+    selectedRegions: ["FR"]
   }),
 
   methods: {
@@ -48,8 +61,8 @@ export default {
 
       if (countryName == "United States") countryName = "USA";
       this.$emit("regionSelected", countryName);
-    },
-  },
+    }
+  }
 };
 </script>
 

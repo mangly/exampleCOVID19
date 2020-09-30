@@ -25,16 +25,37 @@
 
           <v-divider style="border-color:#4f4f4f" />
 
-          <v-list dark dense>
-            <v-list-item v-for="item in itemsMenu" :key="item.title" link>
-              <v-list-item-icon>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+          <v-list dark>
+            <template v-for="item in items">
+              <v-list-group
+                v-if="item.children"
+                :key="item.text"
+                v-model="item.model"
+                append-icon
+                :prepend-icon="item.model ? item.icon : item['icon-alt']"
+              >
+                <template v-slot:activator>
+                  <v-list-item class="pl-0">
+                    <v-list-item-content>
+                      <v-list-item-title>{{ item.text }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </template>
+                <v-list-item v-for="(child, i) in item.children" :key="i" :to="child.link" link>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ child.text }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-group>
+              <v-list-item v-else :key="item.text" link>
+                <v-list-item-action>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.text }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
           </v-list>
         </v-container>
       </v-img>
@@ -44,16 +65,14 @@
         <v-btn class="mx-2 ml-5" fab dark small color="#b70000" @click.stop="changeMini()">
           <v-icon>{{iconChevron}}</v-icon>
         </v-btn>
-            <v-breadcrumbs :items="items">
-      <template v-slot:item="{ item }">
-        <v-breadcrumbs-item
-          :href="item.href"
-          :disabled="item.disabled"
-        >
-          {{ item.text.toUpperCase() }}
-        </v-breadcrumbs-item>
-      </template>
-    </v-breadcrumbs>
+        <v-breadcrumbs :items="itemsBreadCrumbs">
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item
+              :href="item.href"
+              :disabled="item.disabled"
+            >{{ item.text.toUpperCase() }}</v-breadcrumbs-item>
+          </template>
+        </v-breadcrumbs>
         <!-- <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
@@ -61,7 +80,7 @@
           src="./assets/30271657.png"
           transition="scale-transition"
           width="100"
-        /> -->
+        />-->
       </div>
       <v-spacer />
 
@@ -82,11 +101,10 @@
     <v-main style="background-color:#eeeeee; padding-top:120px">
       <v-fade-transition mode="out-in">
         <router-view class="mr-10 ml-10" />
-        <!-- <v-card><HelloWorld/></v-card> -->
       </v-fade-transition>
     </v-main>
-    <v-footer color="black" app>
-      <span class="white--text">
+    <v-footer color="#eeeeee" app>
+      <span class="black--text">
         <strong>&copy; 2020 Covid-19</strong> Powered by Torus Actions SAS
       </span>
     </v-footer>
@@ -106,23 +124,67 @@ export default {
     return {
       isMobile: false,
       drawer: true,
-      itemsMenu: [
-        { title: "Home", icon: "mdi-home-city" },
-        { title: "My Account", icon: "mdi-account" },
-        { title: "Users", icon: "mdi-account-group-outline" }
-      ],
+
       itemsAppBar: [
         { title: "Profile" },
         { title: "Setting" },
         { title: "Logout" }
       ],
+      itemsBreadCrumbs: [
+        {
+          text: "Home",
+          disabled: false,
+          href: "breadcrumbs_dashboard"
+        }
+      ],
       items: [
-      {
-        text: 'Dashboard',
-        disabled: false,
-        href: 'breadcrumbs_dashboard',
-      },
-    ],
+        { icon: "mdi-chevron-right", text: "Home" },
+        { icon: "mdi-chevron-right", text: "Data" },
+        { icon: "mdi-chevron-right", text: "Methodology" },
+        {
+          icon: "mdi-folder-open",
+          "icon-alt": "mdi-folder",
+          text: "Models",
+          model: false,
+          children: [
+            {
+              text: "Book on epidemic modeling",
+              icon: "mdi-circle"
+            }
+          ]
+        },
+        {
+          icon: "mdi-folder-open",
+          "icon-alt": "mdi-folder",
+          text: "Resources",
+          model: false,
+          children: [
+            {
+              icon: "mdi-circle",
+              text: "Methodology"
+            },
+            {
+              icon: "mdi-circle",
+              text: "Models"
+            },
+            {
+              icon: "mdi-circle",
+              text: "Simulations"
+            },
+            {
+              icon: "mdi-circle",
+              text: "Predictions"
+            },
+            {
+              icon: "mdi-circle",
+              text: "State of the art in epidemic modeling"
+            }
+          ]
+        },
+        { icon: "mdi-chevron-right", text: "Containment" },
+        { icon: "mdi-chevron-right", text: "News" },
+        { icon: "mdi-chevron-right", text: "About us" }
+      ],
       mini: false,
       expandOnhover: false,
       iconChevron: "mdi-chevron-left"
@@ -162,3 +224,16 @@ export default {
   }
 };
 </script>
+
+<style>
+.v-list-item .v-list-item__subtitle,
+.v-list-item .v-list-item__title {
+  line-height: 1.2;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.v-list-group__items .v-list-item .v-list-item__title {
+  font-size: 13px;
+}
+</style>

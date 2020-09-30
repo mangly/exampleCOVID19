@@ -1,7 +1,11 @@
 <template>
   <div>
-    <info-covid-world :infoCovidWorld="infoCovidWorld" />
-    <map-world @regionSelected="loadDataFromApi($event)" />
+    <info-covid-world />
+    <map-world
+      class="mt-4"
+      @regionSelected="loadDataFromApi($event)"
+      :infoCovidCountry="infoCovidCountry"
+    />
   </div>
 </template>
 
@@ -11,16 +15,11 @@ import MapWorld from "./MapWorld";
 export default {
   components: {
     "info-covid-world": InfoCovidWorld,
-    "map-world": MapWorld,
+    "map-world": MapWorld
   },
   data() {
     return {
-      infoCovidWorld: {
-        Confirmed: "",
-        Deaths: "",
-        Recovered: "",
-        Active: "",
-      },
+      infoCovidCountry: null
     };
   },
   methods: {
@@ -29,29 +28,9 @@ export default {
         "https://coronavirus-19-api.herokuapp.com/countries/" + regionName
       );
       if (request.state) {
-        // this.infoCovidWorld =
-        //   request.response.data[regionName][
-        //     request.response.data[regionName].length - 1
-        //   ];
-
-        this.infoCovidWorld = request.response.data
-
-        console.log(this.infoCovidWorld);
-
-        if (!this.infoCovidWorld) {
-          this.infoCovidWorld = {
-            Confirmed: "",
-            Deaths: "",
-            Recovered: "",
-            Active: "",
-          };
-        }
+        this.infoCovidCountry = request.response.data;
       }
-    },
-  },
-
-  mounted() {
-    this.loadDataFromApi("World");
-  },
+    }
+  }
 };
 </script>

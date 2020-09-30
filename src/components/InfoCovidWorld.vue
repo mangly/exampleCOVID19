@@ -1,5 +1,5 @@
 <template>
-  <v-card color="#000000" class="pl-3 pr-3 pt-2">
+  <v-card color="#1e1e1e" class="pl-3 pr-3 pt-2">
     <div class="center1">
       <div class="center2" style="font-size:30px">
         <span style="color:#ffffff">#About</span>
@@ -17,7 +17,10 @@
             <v-divider></v-divider>
             <div class="center1">
               <div class="center2">
-                <p class="display-1 pt-2" style="color: white">{{infoCovidWorld.cases }}</p>
+                <p
+                  class="display-1 pt-2"
+                  style="color: white"
+                >{{infoCovidWorld ? infoCovidWorld.cases : ''}}</p>
               </div>
             </div>
           </v-card-text>
@@ -30,7 +33,10 @@
             <v-divider></v-divider>
             <div class="center1">
               <div class="center2">
-                <p class="display-1 pt-2" style="color: white">{{infoCovidWorld.active }}</p>
+                <p
+                  class="display-1 pt-2"
+                  style="color: white"
+                >{{infoCovidWorld ? infoCovidWorld.active : ''}}</p>
               </div>
             </div>
           </v-card-text>
@@ -43,7 +49,10 @@
             <v-divider></v-divider>
             <div class="center1">
               <div class="center2">
-                <p class="display-1 pt-2" style="color: white">{{infoCovidWorld.recovered }}</p>
+                <p
+                  class="display-1 pt-2"
+                  style="color: white"
+                >{{infoCovidWorld ? infoCovidWorld.recovered : ''}}</p>
               </div>
             </div>
           </v-card-text>
@@ -56,7 +65,10 @@
             <v-divider></v-divider>
             <div class="center1">
               <div class="center2">
-                <p class="display-1 pt-2" style="color: black">{{infoCovidWorld.deaths }}</p>
+                <p
+                  class="display-1 pt-2"
+                  style="color: black"
+                >{{infoCovidWorld ? infoCovidWorld.deaths : '' }}</p>
               </div>
             </div>
           </v-card-text>
@@ -68,11 +80,25 @@
 
 <script>
 export default {
-  props: {
-    infoCovidWorld: {
-      type: Object,
-      default: null
+  data() {
+    return {
+      infoCovidWorld: null
+    };
+  },
+
+  methods: {
+    async loadDataFromApi() {
+      const request = await this.$get(
+        "https://coronavirus-19-api.herokuapp.com/countries/world"
+      );
+      if (request.state) {
+        this.infoCovidWorld = request.response.data;
+      }
     }
+  },
+
+  mounted() {
+    this.loadDataFromApi();
   }
 };
 </script>
