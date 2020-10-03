@@ -4,47 +4,53 @@
       <tbody>
         <tr>
           <td>Country:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.country: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.country : "" }}</td>
         </tr>
         <tr>
           <td>Cases:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.cases: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.cases : "" }}</td>
         </tr>
         <tr>
           <td>Today Cases:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.todayCases: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.todayCases : "" }}</td>
         </tr>
         <tr>
           <td>Today Deaths:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.todayDeaths: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.todayDeaths : "" }}</td>
         </tr>
         <tr>
           <td>Recovered:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.recovered: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.recovered : "" }}</td>
         </tr>
         <tr>
           <td>Active:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.active: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.active : "" }}</td>
         </tr>
         <tr>
           <td>Critical:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.critical: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.critical : "" }}</td>
         </tr>
         <tr>
           <td>Cases Per One Million:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.casesPerOneMillion: ''}}</td>
+          <td>
+            {{ infoCovidCountryD ? infoCovidCountryD.casesPerOneMillion : "" }}
+          </td>
         </tr>
         <tr>
           <td>Deaths Per One Million:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.deathsPerOneMillion: ''}}</td>
+          <td>
+            {{ infoCovidCountryD ? infoCovidCountryD.deathsPerOneMillion : "" }}
+          </td>
         </tr>
         <tr>
           <td>Total Tests:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.totalTests: ''}}</td>
+          <td>{{ infoCovidCountryD ? infoCovidCountryD.totalTests : "" }}</td>
         </tr>
         <tr>
           <td>Tests Per One Million:</td>
-          <td>{{infoCovidCountry ? infoCovidCountry.testsPerOneMillion: ''}}</td>
+          <td>
+            {{ infoCovidCountryD ? infoCovidCountryD.testsPerOneMillion : "" }}
+          </td>
         </tr>
       </tbody>
     </template>
@@ -56,8 +62,20 @@ export default {
   props: {
     infoCovidCountry: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
+  },
+
+  data() {
+    return {
+      infoCovidCountryD: null,
+    };
+  },
+
+  watch: {
+    infoCovidCountry() {
+      this.infoCovidCountryD = this.infoCovidCountry;
+    },
   },
 };
 </script>

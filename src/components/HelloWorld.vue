@@ -15,11 +15,11 @@ import MapWorld from "./MapWorld";
 export default {
   components: {
     "info-covid-world": InfoCovidWorld,
-    "map-world": MapWorld
+    "map-world": MapWorld,
   },
   data() {
     return {
-      infoCovidCountry: null
+      infoCovidCountry: null,
     };
   },
   methods: {
@@ -30,7 +30,11 @@ export default {
       if (request.state) {
         this.infoCovidCountry = request.response.data;
       }
-    }
-  }
+    },
+  },
+
+  mounted() {
+    this.loadDataFromApi("France");
+  },
 };
 </script>
