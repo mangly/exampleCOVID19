@@ -119,10 +119,10 @@ export default {
     drawer: false,
     isMobile: false,
     itemsModels: [
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me 2" }
+      { title: "General SIR" },
+      { title: "Agent Based Model" },
+      { title: "Deterministic models" },
+      { title: "Wavelet" }
     ],
     itemsResources: [
       { title: "Methodology" },
